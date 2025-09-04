@@ -1,3 +1,11 @@
+//! # Macrokit ⚙️
+//! A collection of procedural derive macros for Rust.
+//!
+//! ## Features
+//!
+//! - `#[derive(FromReprAsOption)]`: For safe, fallible conversions from an integer representation to an enum, returning an `Option<Self>`.
+//! - `#[derive(FromReprWithUnknown)]`: For infallible conversions that require an `Unknown` variant as a fallback.
+
 extern crate proc_macro;
 
 use proc_macro::TokenStream;

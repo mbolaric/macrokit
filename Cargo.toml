@@ -1,7 +1,30 @@
 [package]
 name = "macrokit"
 version = "0.1.0"
+authors = ["Milan Bolaric"]
+categories = ["procedural-macro"]
 edition = "2024"
+include = [
+    "src/**/*",
+    "examples/**/*",
+    "tests/**",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE",
+]
+readme = "README.md"
+license-file = "LICENSE"
+homepage = "https://github.com/mbolaric/macrokit"
+repository = "https://github.com/mbolaric/macrokit"
+description = "A collection of procedural derive macros for Rust."
+
+keywords = ["macros", "derive", "procedural"]
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+panic = 'abort'
 
 [lib]
 proc-macro = true
