@@ -2,6 +2,11 @@
 
 A collection of procedural derive macros for Rust.
 
+[![Build Status][actions-badge]][actions-url]
+
+[actions-badge]: https://github.com/mbolaric/binary-data/actions/workflows/rust.yml/badge.svg?branch=master
+[actions-url]: https://github.com/mbolaric/binary-data/actions/workflows/rust.yml?query=branch%3Amaster
+
 ## Features
 
 `macrokit` currently provides two derive macros:
