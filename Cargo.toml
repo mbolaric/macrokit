@@ -2,10 +2,7 @@
 name = "macrokit"
 version = "0.1.0"
 authors = ["Milan Bolaric"]
-categories = [
-    "development-tools",
-    "development-tools::procedural-macro-helpers",
-]
+categories = ["development-tools"]
 edition = "2024"
 include = [
     "src/**/*",
