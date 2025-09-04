@@ -11,7 +11,7 @@ pub fn from_repr_with_unknown_derive_impl(ast: &DeriveInput) -> TokenStream {
     let enum_name = &ast.ident;
 
     // Find the integer type from the `#[repr(...)]` attribute (e.g., u8, u16)
-    let repr_type = match get_repr_type(&ast) {
+    let repr_type = match get_repr_type(ast) {
         Some(t) => t,
         None => panic!("FromWithUnknown requires a #[repr(...)] attribute (e.g., #[repr(u8)])"),
     };

@@ -1,0 +1,10 @@
+error[E0599]: no variant or associated item named `Unknown` found for enum `Status` in the current scope
+ --> tests/ui/missing_unknown.rs:3:28
+  |
+3 | #[derive(Debug, PartialEq, FromReprWithUnknown)]
+  |                            ^^^^^^^^^^^^^^^^^^^ variant or associated item not found in `Status`
+4 | #[repr(u8)]
+5 | pub enum Status {
+  | --------------- variant or associated item `Unknown` not found for this enum
+  |
+  = note: this error originates in the derive macro `FromReprWithUnknown` (in Nightly builds, run with -Z macro-backtrace for more info)

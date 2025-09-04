@@ -19,9 +19,9 @@ mod macros;
 /// # Example
 ///
 /// ```rust
-/// use macrokit::FromReprWithUnkown;
-/// 
-/// #[derive(Debug, PartialEq, FromReprWithUnkown)]
+/// use macrokit::FromReprWithUnknown;
+///
+/// #[derive(Debug, PartialEq, FromReprWithUnknown)]
 /// #[repr(u8)]
 /// pub enum LegacyStatus {
 ///     Active = 0,
@@ -38,7 +38,7 @@ mod macros;
 /// let status2 = LegacyStatus::from(0u8);
 /// assert_eq!(status2, LegacyStatus::Active);
 /// ```
-#[proc_macro_derive(FromReprWithUnkown)]
+#[proc_macro_derive(FromReprWithUnknown)]
 pub fn from_repr_with_unknown_derive(input: TokenStream) -> TokenStream {
     // Parse the input tokens into a syntax tree
     let ast = parse_macro_input!(input);

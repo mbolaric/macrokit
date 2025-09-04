@@ -10,15 +10,15 @@ A collection of procedural derive macros for Rust.
 
 This is the recommended macro for safe, fallible conversions. It generates a `from_repr(value: T) -> Option<Self>` function, where `T` is the integer type from your `#[repr(T)]` attribute.
 
-*   **Safe:** Returns an `Option<Self>`, forcing you to handle cases where the integer value does not match any enum variant.
-*   **Flexible:** Does not require any specific fallback variant like `Unknown`.
+- **Safe:** Returns an `Option<Self>`, forcing you to handle cases where the integer value does not match any enum variant.
+- **Flexible:** Does not require any specific fallback variant like `Unknown`.
 
-### 2. `#[derive(FromWithUnknown)]`
+### 2. `#[derive(FromReprWithUnknown)]`
 
-This macro is for infallible conversions. It implements the standard `From<T>` trait, allowing you to use `.into()` and `From::from()`.
+This macro is for infallible conversions. It implements the standard `From<T>` trait, allowing you to use `.into()` and `From::from()` where `T` is the integer type from your `#[repr(T)]` attribute..
 
-*   **Convenient:** Provides ergonomic, infallible conversions.
-*   **Requires a Fallback:** Your enum **must** have a variant named `Unknown` which will be used if the integer value does not match any other variant.
+- **Convenient:** Provides ergonomic, infallible conversions.
+- **Requires a Fallback:** Your enum **must** have a variant named `Unknown` which will be used if the integer value does not match any other variant.
 
 ## Usage
 
@@ -47,14 +47,14 @@ assert_eq!(Command::from_repr(1), Some(Command::Read));
 assert_eq!(Command::from_repr(3), None);
 ```
 
-### Example: `FromWithUnknown`
+### Example: `FromReprWithUnknown`
 
 Use this when you have a clear fallback value and want the convenience of the `From` trait.
 
 ```rust
-use macrokit::FromWithUnknown;
+use macrokit::FromReprWithUnknown;
 
-#[derive(Debug, PartialEq, FromWithUnknown)]
+#[derive(Debug, PartialEq, FromReprWithUnknown)]
 #[repr(u8)]
 pub enum Status {
     Active = 0,
