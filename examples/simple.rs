@@ -1,5 +1,6 @@
-use macrokit::{FromReprAsOption, FromReprWithUnknown};
+use macrokit::{FromReprAsOption, FromReprWithUnknown, enum_with_hex_docs};
 
+#[enum_with_hex_docs]
 #[derive(Debug, PartialEq, FromReprAsOption)]
 #[repr(u8)]
 pub enum Command {
@@ -7,6 +8,7 @@ pub enum Command {
     Write = 2,
 }
 
+#[enum_with_hex_docs]
 #[derive(Debug, PartialEq, FromReprWithUnknown)]
 #[repr(u8)]
 pub enum Status {

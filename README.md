@@ -1,6 +1,6 @@
 # Macrokit ⚙️
 
-A collection of procedural derive macros for Rust.
+A collection of procedural macros for Rust.
 
 [![Build Status][actions-badge]][actions-url]
 
@@ -9,21 +9,28 @@ A collection of procedural derive macros for Rust.
 
 ## Features
 
-`macrokit` currently provides two derive macros:
+`macrokit` currently provides both derive and attribute macros:
 
-### 1. `#[derive(FromReprAsOption)]`
+### 1. `#[derive(FromReprAsOption)]` (Derive Macro)
 
 This is the recommended macro for safe, fallible conversions. It generates a `from_repr(value: T) -> Option<Self>` function, where `T` is the integer type from your `#[repr(T)]` attribute.
 
 - **Safe:** Returns an `Option<Self>`, forcing you to handle cases where the integer value does not match any enum variant.
 - **Flexible:** Does not require any specific fallback variant like `Unknown`.
 
-### 2. `#[derive(FromReprWithUnknown)]`
+### 2. `#[derive(FromReprWithUnknown)]` (Derive Macro)
 
 This macro is for infallible conversions. It implements the standard `From<T>` trait, allowing you to use `.into()` and `From::from()` where `T` is the integer type from your `#[repr(T)]` attribute..
 
 - **Convenient:** Provides ergonomic, infallible conversions.
 - **Requires a Fallback:** Your enum **must** have a variant named `Unknown` which will be used if the integer value does not match any other variant.
+
+### 3. `#[enum_with_hex_docs]` (Attribute Macro)
+
+An attribute macro that enriches enum variants with documentation comments displaying their hexadecimal and decimal values.
+
+- **Automatic Documentation:** Automatically calculates and appends numeric values to each variant's documentation.
+- **Supports Explicit and Implicit Values:** Works with both explicit discriminants and auto-incremented values.
 
 ## Usage
 
@@ -72,4 +79,23 @@ assert_eq!(status, Status::Inactive);
 
 let unknown_status: Status = 99u8.into();
 assert_eq!(unknown_status, Status::Unknown);
+```
+
+### Example: `enum_with_hex_docs`
+
+Use this to automatically generate documentation with hex and decimal values for your enum variants.
+
+```rust
+use macrokit::enum_with_hex_docs;
+
+#[enum_with_hex_docs]
+#[repr(u8)]
+pub enum ControlReg {
+    // Doc comment will be: "Enable = 0x1 (1)"
+    Enable = 1,
+    // Doc comment will be: "Disable = 0x2 (2)"
+    Disable,
+    // Doc comment will be: "Reset = 0xFF (255)"
+    Reset = 0xFF,
+}
 ```

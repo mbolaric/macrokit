@@ -1,10 +1,11 @@
 //! # Macrokit ⚙️
-//! A collection of procedural derive macros for Rust.
+//! A collection of procedural macros for Rust.
 //!
 //! ## Features
 //!
-//! - `#[derive(FromReprAsOption)]`: For safe, fallible conversions from an integer representation to an enum, returning an `Option<Self>`.
+//! - `#[derive(FromReprAsOption)]`: Safely converts an integer to an enum, returning an Option<Self> if the value is valid.
 //! - `#[derive(FromReprWithUnknown)]`: For infallible conversions that require an `Unknown` variant as a fallback.
+//! - `#[enum_with_hex_docs]`: An attribute macro that adds documentation comments to enum variants, displaying both their hexadecimal and decimal values.
 
 extern crate proc_macro;
 
@@ -100,4 +101,35 @@ pub fn from_repr_as_option_derive(input: TokenStream) -> TokenStream {
     // Parse the input tokens into a syntax tree
     let ast = parse_macro_input!(input);
     macros::from_repr_as_option_derive_impl(&ast)
+}
+
+/// An attribute macro that enriches enum variants with documentation comments
+/// displaying their hexadecimal and decimal values.
+///
+/// This macro automatically calculates and appends the numeric values to the
+/// documentation of each enum variant. It respects both explicit discriminants
+/// and auto-incremented values.
+///
+/// # Example
+///
+/// ```rust
+/// use macrokit::enum_with_hex_docs;
+///
+/// #[enum_with_hex_docs]
+/// #[repr(u8)]
+/// pub enum ControlReg {
+///     // Doc comment will be: "Enable = 0x1 (1)"
+///     Enable = 1,
+///     // Doc comment will be: "Disable = 0x2 (2)"
+///     Disable,
+///     // Doc comment will be: "Reset = 0xFF (255)"
+///     Reset = 0xFF,
+/// }
+/// ```
+#[proc_macro_attribute]
+pub fn enum_with_hex_docs(_attr: TokenStream, input: TokenStream) -> TokenStream {
+    // Parse the input tokens into a syntax tree
+    let ast = parse_macro_input!(input as syn::ItemEnum);
+    // Generate the enum with enriched documentation
+    macros::doc::generate_enum_with_docs(ast).into()
 }
